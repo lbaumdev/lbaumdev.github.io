@@ -115,13 +115,15 @@ export function App() {
           <DatePicker date={endDate} setDate={(newDate) => setEndDate(newDate)} />
         </div>
       </form>
-      <div className={"mt-4"}>
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>Your session has expired. Please log in again.</AlertDescription>
-        </Alert>
-      </div>
+      {errorCode !== null && (
+        <div className={"mt-4"}>
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{errors[errorCode]}</AlertDescription>
+          </Alert>
+        </div>
+      )}
       <div className={"mt-4"}>
         {window.location.hash === "#debug" && (
           <pre>
