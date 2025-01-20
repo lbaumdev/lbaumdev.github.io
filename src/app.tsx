@@ -15,7 +15,7 @@ const errors = {
 };
 
 export function App() {
-  const telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").show().disable();
+  const telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").hide().disable();
   const in7Days = new Date(new Date().setDate(new Date().getDate() + 7));
 
   const [choice, setChoice] = useState("0");
@@ -40,6 +40,7 @@ export function App() {
     }
     return options[1].cronExpression.replace("x", amount);
   };
+
   const getCronText = (expression: string) =>
     cronstrue.toString(expression, { locale: "de", use24HourTimeFormat: true });
 
@@ -63,9 +64,9 @@ export function App() {
       return false;
     }
 
-    if (endDate < new Date()) {
+    if (endDate.getTime() < new Date().getTime()) {
       showError && setErrorCode("end-date-in-past");
-      return true;
+      return false;
     }
 
     showError && setErrorCode(null);
@@ -73,7 +74,8 @@ export function App() {
   };
 
   if (errorCode === null && isValid()) {
-    telegramSubmitButton.enable();
+    telegramSubmitButton.enable().show();
+    console.log("enabled");
   }
 
   return (
@@ -123,9 +125,9 @@ export function App() {
             <AlertDescription>{errors[errorCode]}</AlertDescription>
           </Alert>
         </div>
-      )}
-      <div className={"mt-4"}>
-        {window.location.hash === "#debug" && (
+      )}{" "}
+      {window.location.hash === "#debug" && (
+        <div className={"mt-4"}>
           <pre>
             <code>
               {JSON.stringify(
@@ -140,8 +142,9 @@ export function App() {
               )}
             </code>
           </pre>
-        )}
-      </div>
+          <button onClick={() => console.log("Valid: " + isValid())}>Check</button>
+        </div>
+      )}
     </>
   );
 }
