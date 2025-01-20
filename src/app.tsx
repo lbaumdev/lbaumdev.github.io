@@ -8,6 +8,8 @@ import cronstrue from "cronstrue/i18n";
 import DatePicker from "./components/DatePicker";
 import { Alert, AlertDescription, AlertTitle } from "./components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { Input } from "./components/ui/input";
+import { Button } from "./components/ui/button";
 
 const errors = {
   "missing-end-date": "Enddatum ist erforderlich",
@@ -102,7 +104,12 @@ export function App() {
       <span className="copyright">
         &copy; Copyright {new Date().getFullYear()} TMS ({COPYRIGHT})
       </span>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          isValid(values);
+        }}
+      >
         <RadioGroup
           defaultValue="0"
           onValueChange={(c) => {
@@ -148,16 +155,27 @@ export function App() {
             }}
           />
         </div>
-      </form>
-      {values.errorCode !== null && (
-        <div className={"mt-4"}>
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{errors[values.errorCode]}</AlertDescription>
-          </Alert>
+        {values.errorCode !== null && (
+          <div className={"mt-4"}>
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{errors[values.errorCode]}</AlertDescription>
+            </Alert>
+          </div>
+        )}
+        <Input
+          className="mt-4"
+          type="text"
+          placeholder="Crontab Expression"
+          value={getCronText(getCronExpression(values.choice, values.amount))}
+          disabled={true}
+        />
+        <div className="flex mt-4 justify-center">
+          <Button type="submit">Check</Button>
         </div>
-      )}
+      </form>
+
       {window.location.hash === "#debug" && (
         <div className={"mt-4"}>
           <pre>
