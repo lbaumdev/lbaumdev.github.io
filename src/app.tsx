@@ -23,7 +23,7 @@ type ValueState = {
 };
 
 export function App() {
-  const telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").hide().disable();
+  let telegramSubmitButton: BottomButton;
   const in7Days = new Date(new Date().setDate(new Date().getDate() + 7));
 
   const [values, setValues] = useState<ValueState>({
@@ -56,6 +56,8 @@ export function App() {
 
   useEffect(() => {
     Telegram.WebApp.ready();
+    telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").hide().disable();
+
     telegramSubmitButton.onClick(function () {
       if (!isValid(values)) return;
 
