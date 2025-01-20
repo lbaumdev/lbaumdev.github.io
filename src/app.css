@@ -1,0 +1,11 @@
+#app {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  max-width: 45rem;
+  margin-inline: auto;
+  padding-top: 12rem;
+}
