@@ -56,7 +56,7 @@ export function App() {
 
   useEffect(() => {
     Telegram.WebApp.ready();
-    telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").hide().disable();
+    telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").show().disable();
 
     telegramSubmitButton.onClick(function () {
       if (!isValid(values)) return;
@@ -90,7 +90,7 @@ export function App() {
       return false;
     }
 
-    telegramSubmitButton.enable().show();
+    telegramSubmitButton.enable();
 
     setValues({ ...result, errorCode: null });
 
@@ -99,6 +99,9 @@ export function App() {
 
   return (
     <>
+      <span className="copyright">
+        &copy; Copyright {new Date().getFullYear()} TMS ({COPYRIGHT})
+      </span>
       <form>
         <RadioGroup
           defaultValue="0"

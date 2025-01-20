@@ -7,5 +7,11 @@
   width: 100%;
   max-width: 45rem;
   margin-inline: auto;
+}
+
+#app > form {
   padding-top: 12rem;
+}
+.copyright {
+  font-size: 0.7rem;
 }
