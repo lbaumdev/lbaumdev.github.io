@@ -25,12 +25,10 @@ type ValueState = {
 };
 
 export function App() {
-  const in7Days = new Date(new Date().setDate(new Date().getDate() + 7));
-
   const [values, setValues] = useState<ValueState>({
     choice: "0",
     amount: "2",
-    endDate: in7Days,
+    endDate: undefined,
     errorCode: null,
   });
 
