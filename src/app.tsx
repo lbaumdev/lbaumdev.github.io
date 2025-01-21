@@ -25,7 +25,6 @@ type ValueState = {
 };
 
 export function App() {
-  let telegramSubmitButton: BottomButton;
   const in7Days = new Date(new Date().setDate(new Date().getDate() + 7));
 
   const [values, setValues] = useState<ValueState>({
@@ -58,9 +57,9 @@ export function App() {
 
   useEffect(() => {
     Telegram.WebApp.ready();
-    telegramSubmitButton = Telegram.WebApp.MainButton.setText("Zeitplan speichern").show().disable();
+    Telegram.WebApp.MainButton.setText("Zeitplan speichern").show().disable();
 
-    telegramSubmitButton.onClick(function () {
+    Telegram.WebApp.MainButton.onClick(function () {
       if (!isValid(values)) return;
 
       const data = JSON.stringify({
@@ -79,6 +78,7 @@ export function App() {
     if (_values.endDate === undefined) {
       if (showError) {
         result["errorCode"] = "missing-end-date";
+        Telegram.WebApp.MainButton.disable();
         setValues(result);
       }
       return false;
@@ -87,12 +87,13 @@ export function App() {
     if (_values.endDate.getTime() < new Date().getTime()) {
       if (showError) {
         result["errorCode"] = "end-date-in-past";
+        Telegram.WebApp.MainButton.disable();
         setValues(result);
       }
       return false;
     }
 
-    telegramSubmitButton.enable();
+    Telegram.WebApp.MainButton.show().enable();
 
     setValues({ ...result, errorCode: null });
 
