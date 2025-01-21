@@ -172,9 +172,6 @@ export function App() {
           value={getCronText(getCronExpression(values.choice, values.amount))}
           disabled={true}
         />
-        <div className="flex mt-4 justify-center">
-          <Button type="submit">Check</Button>
-        </div>
       </form>
 
       {window.location.hash === "#debug" && (
@@ -193,7 +190,7 @@ export function App() {
               )}
             </code>
           </pre>
-          <button onClick={() => console.log("Valid: " + isValid(values))}>Check</button>
+          <Button onClick={() => console.log("Valid: " + isValid(values))}>Check</Button>
         </div>
       )}
     </>
