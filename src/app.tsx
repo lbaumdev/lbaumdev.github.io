@@ -57,7 +57,7 @@ export function App() {
 
   useEffect(() => {
     Telegram.WebApp.ready();
-    Telegram.WebApp.MainButton.setText("Zeitplan speichern").show().disable();
+    Telegram.WebApp.MainButton.setText("Zeitplan speichern");
 
     Telegram.WebApp.MainButton.onClick(function () {
       if (!isValid(values)) return;
@@ -78,7 +78,7 @@ export function App() {
     if (_values.endDate === undefined) {
       if (showError) {
         result["errorCode"] = "missing-end-date";
-        Telegram.WebApp.MainButton.disable();
+        Telegram.WebApp.MainButton.hide();
         setValues(result);
       }
       return false;
@@ -87,13 +87,13 @@ export function App() {
     if (_values.endDate.getTime() < new Date().getTime()) {
       if (showError) {
         result["errorCode"] = "end-date-in-past";
-        Telegram.WebApp.MainButton.disable();
+        Telegram.WebApp.MainButton.hide();
         setValues(result);
       }
       return false;
     }
 
-    Telegram.WebApp.MainButton.show().enable();
+    Telegram.WebApp.MainButton.show();
 
     setValues({ ...result, errorCode: null });
 
